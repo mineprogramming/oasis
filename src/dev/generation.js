@@ -63,16 +63,21 @@ Callback.addCallback("GenerateChunk", function(chunkX, chunkZ, random, dimension
         for(var i = 0; i < GRASS_DENSITY; i++){
             var coords = GenerationUtils.randomXZ(chunkX, chunkZ);
             coords = GenerationUtils.findHighSurface(coords.x, coords.z);
+
             var ground = World.getBlock(coords.x, coords.y, coords.z);
             if(ground.id == 2){
-                World.setBlock(coords.x, coords.y + 1, coords.z, 1, random(1, 2));
+                World.setBlock(coords.x, coords.y + 1, coords.z, 31, randomInt(1, 2));
             }
         }
 
         for(i = 0; i < PALM_DENSITY; i++){
             coords = GenerationUtils.randomXZ(chunkX, chunkZ);
             coords = GenerationUtils.findHighSurface(coords.x, coords.z);
-            ModGenerator.generatePalm(coords.x, coords.y + 1, coords.z);
+
+            ground = World.getBlock(coords.x, coords.y, coords.z);
+            if(ground.id == 2){
+                ModGenerator.generatePalm(coords.x, coords.y + 1, coords.z);
+            }
         }
     }
 });
@@ -89,7 +94,7 @@ var ModGenerator = {
      * Generates palm on the specified coordinates
      */
     generatePalm: function(x, y, z){
-        var height = random(4, 6);
+        var height = randomInt(4, 6);
 
         // Trunk
         for(var i = 0; i < height - 1; i++){
@@ -100,7 +105,7 @@ var ModGenerator = {
         World.setBlock(x, y + height, z, BlockID.palmLeaves, 0);
 
         for(var i = 0; i < 4; i++){
-            this._generatePalmLeavesRecursively(x, y + height, z, i, random(1, 2));
+            this._generatePalmLeavesRecursively(x, y + height, z, i, randomInt(1, 2));
             if(Math.random() > 0.5){
                 this.generateCoconut(x, y + height - 1, z);
             }
@@ -108,7 +113,7 @@ var ModGenerator = {
     },
 
     generateCoconut: function(x, y, z){
-        var direction = this._directions[random(0, 3)];
+        var direction = this._directions[randomInt(0, 3)];
         World.setBlock(x + direction[0], y, z + direction[1], BlockID.coconutBlock, 0);
     },
 

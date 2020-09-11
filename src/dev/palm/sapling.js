@@ -46,7 +46,7 @@ Callback.addCallback("ItemUse", function(coords, item, block){
 			var px = coords.x + Math.random();
 			var pz = coords.z + Math.random();
 			var py = coords.y + Math.random(); 
-			Particles.addFarParticle(ParticleType.happyVillager, px, py, pz, 0, 0, 0);
+			Particles.addFarParticle(Native.ParticleType.happyVillager, px, py, pz, 0, 0, 0);
 		}
 		if(Math.random() < 0.25){
 			ModGenerator.generatePalm(coords.x, coords.y, coords.z);
