@@ -63,16 +63,16 @@ Callback.addCallback("GenerateChunk", function(chunkX, chunkZ, random, dimension
         for(var i = 0; i < GRASS_DENSITY; i++){
             var coords = GenerationUtils.randomXZ(chunkX, chunkZ);
             coords = GenerationUtils.findHighSurface(coords.x, coords.z);
-            var ground = World.getBlock(coords.x, coords.y - 1, coords.z);
+            var ground = World.getBlock(coords.x, coords.y, coords.z);
             if(ground.id == 2){
-                World.setBlock(coords.x, coords.y, coords.z, 1, random(1, 2));
+                World.setBlock(coords.x, coords.y + 1, coords.z, 1, random(1, 2));
             }
         }
 
         for(i = 0; i < PALM_DENSITY; i++){
             coords = GenerationUtils.randomXZ(chunkX, chunkZ);
             coords = GenerationUtils.findHighSurface(coords.x, coords.z);
-            ModGenerator.generatePalm(coords.x, coords.y, coords.z);
+            ModGenerator.generatePalm(coords.x, coords.y + 1, coords.z);
         }
     }
 });
@@ -89,7 +89,7 @@ var ModGenerator = {
      * Generates palm on the specified coordinates
      */
     generatePalm: function(x, y, z){
-        var height = random(5, 7);
+        var height = random(4, 6);
 
         // Trunk
         for(var i = 0; i < height - 1; i++){
