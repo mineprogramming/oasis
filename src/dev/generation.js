@@ -2,8 +2,9 @@
  * Generator settings
  */
 const PALM_DENSITY = 4;
+const GRASS_DENSITY = 10;
 
-const OASIS_GENERATION_THRESHOLD = 0.85;
+const OASIS_GENERATION_THRESHOLD = 0.88;
 const LAKE_GENERATION_THRESHOLD = 0.93;
 
 const OCTAVE_SCALE = 48;
@@ -23,7 +24,7 @@ Callback.addCallback("GenerateBiomeMap", function(chunkX, chunkZ, random, dimens
 
     // Check if it is one of the deset biomes
     var biome = World.getBiomeMap(cornerX + 8, cornerZ + 8);
-    if(biome != 2 && biome != 130){
+    if(biome != 2 && biome != 17 && biome != 130){
         return;
     }
 
@@ -59,8 +60,17 @@ Callback.addCallback("GenerateChunk", function(chunkX, chunkZ, random, dimension
     // Check if it is one of mod's biomes
     var biome = World.getBiome(cornerX + 8, cornerZ + 8);
     if(biome == biomeOasis.id){
-        for(var i = 0; i < PALM_DENSITY; i++){
+        for(var i = 0; i < GRASS_DENSITY; i++){
             var coords = GenerationUtils.randomXZ(chunkX, chunkZ);
+            coords = GenerationUtils.findHighSurface(coords.x, coords.z);
+            var ground = World.getBlock(coords.x, coords.y - 1, coords.z);
+            if(ground.id == 2){
+                World.setBlock(coords.x, coords.y, coords.z, 1, random(1, 2));
+            }
+        }
+
+        for(i = 0; i < PALM_DENSITY; i++){
+            coords = GenerationUtils.randomXZ(chunkX, chunkZ);
             coords = GenerationUtils.findHighSurface(coords.x, coords.z);
             ModGenerator.generatePalm(coords.x, coords.y, coords.z);
         }
@@ -87,7 +97,6 @@ var ModGenerator = {
         }
 
         World.setBlock(x, y + height - 1, z, BlockID.palmLogFruitful, 0);
-        
         World.setBlock(x, y + height, z, BlockID.palmLeaves, 0);
 
         for(var i = 0; i < 4; i++){

@@ -21,5 +21,5 @@ ToolAPI.registerBlockMaterial(BlockID.coconutBlock, "plant");
 TileRenderer.setPlantModel(BlockID.coconutBlock, 0, "coconut", 0);
 
 Block.registerDropFunction("coconutBlock", function(){
-	return [[ItemID.palmSapling, 1, 0]];
+	return [[ItemID.coconut, 1, 0]];
 });
