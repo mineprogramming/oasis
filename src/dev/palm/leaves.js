@@ -17,7 +17,7 @@ Block.registerDropFunction("palmLeaves", function(coords, blockID, blockData, le
 		return [[blockID, 1, 2]];
 	}
 	if(Math.random() < SAPLING_DROP_CHANCE){
-		return [[ItemID.rubberSapling, 1, 0]]
+		return [[ItemID.palmSapling, 1, 0]]
 	}
 	return [];
 });
